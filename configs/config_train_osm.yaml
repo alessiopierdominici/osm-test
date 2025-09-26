@@ -1,0 +1,38 @@
+# Configuration for training on OSM dataset
+model:
+  patch_size: 32
+  image_size: 224
+  use_original_clip: false
+  use_augmentation: false
+  return_cls_for_osm: false
+
+training:
+  learning_rate: 5e-5
+  batch_size: 192
+  epochs: 100
+  patience: 5
+  optimizer: "Adafactor"  # Options: Adam, AdamW, Adafactor
+  weight_decay: 0.05
+  seed: 42
+
+gradient_accumulation:
+  enabled: true
+  steps: 2
+
+dataset:
+  path: "/media/data_fast/Riccardo/OpenStreetCLIP_dataset"  # Update this path
+  train_percentage: 0.7
+  val_percentage: 0.2
+  mask_path: "masks/32_f1"  # Set to "masks/32_f1" if using gradient accumulation
+
+logging:
+  wandb_enabled: false
+  log_level: "INFO"
+
+checkpoints:
+  save_enabled: true
+  save_best_each_epoch: true
+  output_dir: "checkpoints/train_osm_checkpoints"
+
+device:
+  cuda_device: 0  # Set to -1 for CPU

@@ -1,0 +1,43 @@
+# Configuration for fine-tuning on 4 datasets
+model:
+  name: "ViT-B/32"
+  image_size: 224
+  use_original_clip: false
+  use_augmentation: false
+
+training:
+  learning_rate: 5e-5
+  batch_size: 192
+  epochs: 100
+  patience: 5
+  optimizer: "Adafactor"  # Options: Adam, AdamW, Adafactor
+  weight_decay: 0.05
+  seed: 42
+
+gradient_accumulation:
+  enabled: true
+  steps: 2
+
+augmentation:
+  aug_new_images: true
+  num_aug_images: 2
+
+datasets:
+  names:
+    - "NWPU"
+    - "RSICD" 
+    - "UCM"
+    - "SIDNEY"
+
+logging:
+  wandb_enabled: false
+  log_level: "INFO"
+
+checkpoints:
+  save_enabled: true
+  save_best_each_epoch: true
+  checkpoint_to_load: ""  # Path to checkpoint to resume from
+  output_dir: "checkpoints/finetuning_checkpoints"
+
+device:
+  cuda_device: 0  # Set to -1 for CPU
